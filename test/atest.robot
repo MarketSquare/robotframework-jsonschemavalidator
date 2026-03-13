@@ -1,15 +1,12 @@
 *** Settings ***
 Documentation  test
-Library  JsonValidator.py  schema=schema.json  errors_on_validation=False  AS  jv
-Suite Teardown  jv.Log Errors
-
-*** Variables ***
+Library  JsonValidator  schema=test/testdata/schema.json  fail_on_error=False  AS  jv
 
 
 *** Test Cases ***
 Validate bad json file 
     [Documentation]  testing with json file
-    Run Keyword And Expect Error   STARTS: SchemaValidationError  jv.Validate Json  data=test.json  name=tc1
+    Run Keyword And Expect Error   STARTS: SchemaValidationError  jv.Validate Json  data=test/testdata/test.json  name=tc1
 
 Validate bad json dict
     [Documentation]  testing with dict
@@ -20,7 +17,7 @@ Validate bad json dict
 Validate multiple bad json
     [Documentation]  testing with dict
     VAR  &{jsondata}  name=${1}  price=${33}
-    VAR  @{jsonlist}  test.json  ${jsondata}
+    VAR  @{jsonlist}  test/testdata/test.json  ${jsondata}
     Run Keyword And Expect Error  STARTS: SchemaValidationError:  jv.Validate Multiple Json  ${jsonlist}  prefix=TC3
 
 
