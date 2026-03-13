@@ -90,19 +90,6 @@ robotframework-jsonvalidator/
 uv run robot tests/
 ```
 
-### Contributing Guidelines
-
-- Maintain consistent naming for keywords  
-- Keep documentation up to date with new features  
-- Include tests for new functionality  
-- Follow existing styles for logging and error reporting  
-
-Pull requests and issue reports are welcome!
-
-
-
----
-
 ## 🤝 Contributing
 
 Contributions are encouraged and appreciated.  
@@ -114,6 +101,15 @@ To contribute:
 4. Submit a pull request  
 
 For major changes, please open an issue to discuss before starting work.
+
+### Contributing Guidelines
+
+- Maintain consistent naming for keywords  
+- Keep documentation up to date with new features  
+- Include tests for new functionality  
+- Follow existing styles for logging and error reporting  
+
+Pull requests and issue reports are welcome!
 
 ---
 
