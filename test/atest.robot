@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation  test
-Library  JsonValidator  schema=test/testdata/schema.json  fail_on_error=False  AS  jv
+Library  JsonValidator  schema=test/testdata/schema.json  fail_on_error=True  AS  jv
 
 
 *** Test Cases ***
