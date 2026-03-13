@@ -38,7 +38,7 @@ build-backend = "uv_build"
 
 [tool.uv.build-backend]
 module-name = "JsonValidator"
-module-root = ""
+module-root = "./src"
 
 [dependency-groups]
 dev = [

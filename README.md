@@ -47,15 +47,16 @@ uv add robotframework-jsonvalidator
 ```
 
 ### Using poetry
+
 ```bash
 poetry add robotframework-jsonvalidator
 ```
 
 ### Using pip
+
 ```bash
 pip install robotframework-jsonvalidator
 ```
-
 
 This makes the library available to Robot Framework as:
 
@@ -63,21 +64,23 @@ This makes the library available to Robot Framework as:
 *** Settings ***
 Library    JsonValidator
 ```
+
 ---
 
 ## 🧱 Project Structure
 
-```
+```txt
 robotframework-jsonvalidator/
 ├─ pyproject.toml
-├─ JsonValidator/
-│  ├─ __init__.py
-│  ├─ JsonValidator.py   # Core implementation
-│  ├─ errors.py
+├─ src/
+│   └─ JsonValidator/
+│       ├─ __init__.py
+│       ├─ JsonValidator.py   # Core implementation
+│       └─ errors.py
 └─ tests/
-   └─ atest.robot
+    └─ atest.robot
+```
 
----
 
 ## 🧪 Testing & Development
 
