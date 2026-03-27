@@ -1,15 +1,15 @@
 name: Build and Publish to TestPyPI
  
 on:
-  push:
-    branches:
-      - main # Trigger on push to the main branch
+ push:
+  branches:
+   - main
+
 
 jobs:
   build-and-publish:
     name: build and upload release to TestPyPi
     runs-on: ubuntu-latest
-    environment: testpypi
     permissions:
         id-token: write
 
