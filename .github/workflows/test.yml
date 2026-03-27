@@ -26,7 +26,7 @@ jobs:
             version: 0.11.2
             python-version: ${{ matrix.python-version}}
         - name: install project
-          run: uv sync --locked --dev
+          run: uv sync --dev
 
         - name: run Test
           run: uv run robot test/atest.robot
