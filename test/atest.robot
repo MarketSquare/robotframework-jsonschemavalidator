@@ -25,3 +25,14 @@ Validate good json dict
     [Documentation]  testing with dict
     VAR  &{jsondata}  name=test  price=${33.44}  
      jv.Validate Json  data=${jsondata}  name="test dict"
+
+Reset Schema Demo
+    jv.Reset Schema
+    # Next call will fail because no schema is loaded
+    Run Keyword And Expect Error  STARTS: SchemaNotLoadedError:    jv.Validate Json    {"id": 1}
+
+# Reset Validation Errors
+#     jv.Validate Json   {"invalid": "value"}
+#     Should be empty  ${jv.error_list}  # Shows collected errors
+#     Reset Errors
+#     Should Be Empty    ${error_list}

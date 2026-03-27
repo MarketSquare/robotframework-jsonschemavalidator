@@ -1,23 +1,17 @@
 """
-json_validator.py
+JSON Validator
 -----------------
 
-A lightweight JSON validation helper intended for use both in Python and
-Robot Framework test suites.
+A lightweight JSON validation helper intended for use in Robot Framework test suites.
 
 `JsonValidator` can load a JSON Schema from a dict or a path-like string and
 validate JSON payloads, collecting errors or raising them immediately based on
 configuration.
 
-Typical usage:
-
-    validator = JsonValidator(schema="schemas/order.schema.json")
-    validator.validate_json({"id": 1, "items": []})
-
 Robot Framework usage:
 
     *** Settings ***
-    Library     JsonValidator     schema=${CURDIR}/schemas/order.schema.json    fail_on_error=${True}
+    Library     JsonValidator     schema=${CURDIR}/schemas/order_schema.json    fail_on_error=${True}
 
     *** Test Cases ***
     Validate Order Json
@@ -36,40 +30,35 @@ import tabulate
 
 class JsonValidator:
     """
-    Validate JSON documents against a JSON Schema.
+    Initialize the JSON validator and optionally load a schema.
 
-    This library is designed to be used both in Python and in Robot Framework.
-    When used in Robot Framework, the scope is limited to a single test due to
-    `ROBOT_LIBRARY_SCOPE = 'TEST'`, meaning a fresh instance is created for
-    each test case (no cross-test state leakage).
+    Parameters
+    ----------
+    schema : str or dict
+        Either a path to a JSON Schema file (``.json``) or an in‑memory JSON Schema
+        dictionary. If ``None``, no schema is loaded at construction time and
+        `Load New Schema` must be called before validation.
+    fail_on_error : bool, optional
+        When ``True`` (default), validation errors raise an exception immediately.
+        When ``False``, validation issues are appended to `error_list` for
+        later inspection.
 
-    Attributes:
-        ROBOT_LIBRARY_SCOPE (str): Robot Framework scope; set to ``'TEST'``
-            so each test gets a clean instance.
-        error_list (list[str]): Collected validation error messages from the
-            most recent operation(s). This list is cleared when loading a
-            new schema or before validation runs, depending on your internal
-            design choices.
-        fail_on_error (bool): If ``True``, validation failures will be
-            raised immediately as exceptions. If ``False``, failures are
-            accumulated in ``error_list`` and can be retrieved after
-            validation.
-        schema_loaded (bool): Flag indicating whether a schema has been
-            successfully loaded.
+    Attributes Initialized
+    ----------------------
+    error_list : list
+        An empty list used to collect validation error messages.
+    fail_on_error : bool
+        Mirrors the passed flag to control error‑handling behavior.
+    schema_loaded : bool
+        Indicates whether a schema is currently loaded.
 
-    Examples:
-        Load schema from dict and validate:
-
-            >>> schema = {"type": "object", "properties": {"id": {"type": "integer"}}, "required": ["id"]}
-            >>> v = JsonValidator(schema=schema, fail_on_error=True)
-            >>> v.validate_json({"id": 123})  # No exception
-
-        Load schema from file path and collect errors instead of raising:
-
-            >>> v = JsonValidator(schema="schemas/order.schema.json", fail_on_error=False)
-            >>> v.validate_json({"id": "not-an-integer"})
-            >>> v.error_list  # doctest: +ELLIPSIS
-            ['... must be integer ...']
+    Raises
+    ------
+    ValueError
+        If the provided ``schema`` argument is neither a string nor a dictionary,
+        or if loading the schema fails depending on `Load New Schema`.
+    FileNotFoundError
+        If a string path is provided but the file cannot be found.
     """
 
     ROBOT_LIBRARY_SCOPE = "TEST"
@@ -81,35 +70,33 @@ class JsonValidator:
         """
         Initialize the JSON validator and optionally load a schema.
 
-        Args:
-            schema: Either a path to a JSON Schema file (``.json``) or an
-                in-memory JSON Schema dictionary. If ``None``, no schema is
-                loaded at construction time, and you must call
-                :meth:`load_new_schema` before validation.
-            fail_on_error: When ``True`` (default), validation errors
-                raise an exception immediately. When ``False``, validation
-                issues are appended to :attr:`error_list` for later inspection.
+        Parameters
+        ----------
+        schema : str or dict, optional
+            Either a path to a JSON Schema file (``.json``) or an in-memory JSON
+            Schema dictionary. If ``None``, no schema is loaded at construction time
+            and :meth:`load_new_schema` must be called before validation.
+        fail_on_error : bool, optional
+            When ``True`` (default), validation errors raise an exception immediately.
+            When ``False``, validation issues are appended to :attr:`error_list` for
+            later inspection.
 
-        Attributes Initialized:
-            error_list: An empty list used to collect validation error messages.
-            fail_on_error: Mirrors the passed flag to control error
-                handling behavior.
-            schema_loaded: Indicates whether a schema is currently loaded.
+        Attributes Initialized
+        ----------------------
+        error_list : list
+            An empty list used to collect validation error messages.
+        fail_on_error : bool
+            Mirrors the passed flag to control error-handling behavior.
+        schema_loaded : bool
+            Indicates whether a schema is currently loaded.
 
-        Raises:
-            ValueError: If the provided ``schema`` argument is neither a string
-                nor a dictionary (when provided), or if loading the schema
-                fails (depending on your :meth:`load_new_schema` implementation).
-            FileNotFoundError: If a string path is provided but the file cannot
-                be found (depending on :meth:`load_new_schema`).
-
-        Example:
-            >>> # Construct without a schema, then load one later
-            >>> v = JsonValidator(fail_on_error=False)
-            >>> v.load_new_schema({"type": "object", "properties": {"name": {"type": "string"}}, "required": ["name"]})
-            >>> v.validate({"name": "Alice"})
-            >>> v.error_list
-            []
+        Raises
+        ------
+        ValueError
+            If the provided ``schema`` argument is neither a string nor a dictionary,
+            or if schema loading fails depending on :meth:`load_new_schema`.
+        FileNotFoundError
+            If a string path is provided but the file cannot be found.
         """
 
         self.error_list = []
@@ -124,52 +111,52 @@ class JsonValidator:
         """
         Load and set a new JSON Schema for validation.
 
-        Accepts either:
-        - a **dictionary** containing the JSON Schema, or
-        - a **string path** (e.g., ``.json`` file) pointing to a JSON Schema on disk.
+        This method accepts either:
 
-        This method first tries to treat ``schema`` as a ready-to-use schema object
-        and compile it via the internal validator setup. If that fails due to a
-        schema compilation issue (`jsonschema.exceptions.SchemaError`), it will
-        attempt to **read** the argument as a filesystem path, parse the JSON, and
-        compile the resulting schema. On success, :attr:`schema_loaded` is set to
-        ``True``.
+        * a dictionary containing the JSON Schema, or
+        * a string path (e.g., ``.json`` file) pointing to a JSON Schema on disk.
 
-        Args:
-            schema: A JSON Schema dictionary or a path (string) to a JSON Schema file.
+        The method first attempts to interpret ``schema`` as a ready-to-use dictionary
+        and compile it via the internal validator setup. If schema compilation fails
+        due to a ``jsonschema.exceptions.SchemaError``, the method attempts to treat
+        the argument as a filesystem path, read the JSON file, and compile the resulting
+        schema. On success, :attr:`schema_loaded` is set to ``True``.
 
-        Raises:
-            FileNotFoundError: If a path is provided but the file does not exist.
-            PermissionError: If the schema file is not readable due to permissions.
-            json.JSONDecodeError: If a file is provided and contains invalid JSON.
-            jsonschema.exceptions.SchemaError: If the schema (dict or file content)
-                is structurally invalid per the JSON Schema specification.
-            TypeError: If ``schema`` is neither a string nor a mapping (depending on
-                the behavior of ``_set_schema_validator`` / ``_read_json``).
-            ValueError: If the schema content cannot be interpreted as a valid JSON
-                Schema by the underlying validator.
+        Parameters
+        ----------
+        schema : str or dict
+            A JSON Schema dictionary or a path (string) to a JSON Schema file.
 
-        Side Effects:
-            - Sets :attr:`schema_loaded` to ``True`` on success.
-            - May clear or reinitialize internal error state as per implementation
-            (e.g., :attr:`error_list`), depending on how ``_set_schema_validator``
-            is designed.
+        Raises
+        ------
+        FileNotFoundError
+            If a path is provided but the file does not exist.
+        PermissionError
+            If the schema file cannot be read due to insufficient permissions.
+        json.JSONDecodeError
+            If the schema file contains invalid JSON.
+        jsonschema.exceptions.SchemaError
+            If the schema (dictionary or loaded file content) is structurally invalid
+            according to the JSON Schema specification.
+        TypeError
+            If ``schema`` is neither a string nor a mapping, depending on the behavior
+            of ``_set_schema_validator`` and ``_read_json``.
+        ValueError
+            If the schema content cannot be interpreted as a valid JSON Schema by the
+            underlying validator.
 
-        Examples:
-            Load from a dict (Python):
-                >>> schema_dict = {"type": "object", "properties": {"id": {"type": "integer"}}, "required": ["id"]}
-                >>> v = JsonValidator(fail_on_error=True)
-                >>> v.load_new_schema(schema_dict)
-                >>> v.schema_loaded
-                True
+        Side Effects
+        ------------
+        * Sets :attr:`schema_loaded` to ``True`` on success.
+        * May clear or reinitialize internal error state (e.g., :attr:`error_list`),
+        depending on how ``_set_schema_validator`` is implemented.
 
-            Load from a file path (Python):
-                >>> v = JsonValidator()
-                >>> v.load_new_schema("schemas/order.schema.json")
-                >>> v.schema_loaded
-                True
+        Examples
+        --------
+        Robot Framework (library imported with no initial schema):
 
-        Robot Framework (library imported with no schema, then load):
+        .. code-block:: robotframework
+
             *** Test Cases ***
             Load Schema From File
                 Load New Schema    ${CURDIR}/schemas/order.schema.json
@@ -192,11 +179,11 @@ class JsonValidator:
         This keyword validates a single JSON payload which may be passed either
         as a dictionary or as a filesystem path to a JSON file. The document is
         validated against the currently loaded JSON Schema. Any validation errors
-        encountered are collected via :meth:`_set_errors`.
+        encountered are collected via `_set_errors`.
 
         When ``fail_on_error`` is ``True`` (default), this keyword logs
-        the errors and raises :class:`SchemaValidationError` if any issues are
-        found. When ``False``, errors are merely stored in :attr:`error_list`.
+        the errors and raises `SchemaValidationError` if any issues are
+        found. When ``False``, errors are merely stored in `error_list`.
 
         Args:
             data:
@@ -220,8 +207,8 @@ class JsonValidator:
                 If validation fails and ``fail_on_error`` is ``True``.
 
         Side Effects:
-            - Appends collected errors (if any) to :attr:`error_list`.
-            - Calls :meth:`log_errors` when ``fail_on_error`` is ``True``.
+            - Appends collected errors (if any) to `error_list`.
+            - Calls `log_errors` when ``fail_on_error`` is ``True``.
 
         Examples:
             Robot Framework:
@@ -261,9 +248,9 @@ class JsonValidator:
         to a JSON file. Each document is validated against the currently loaded
         JSON Schema.
 
-        Validation errors are collected via :meth:`_set_errors`. When
+        Validation errors are collected via `_set_errors`. When
         ``fail_on_error`` is ``True`` (the default), all errors encountered
-        during processing will be logged and a :class:`SchemaValidationError` will
+        during processing will be logged and a `SchemaValidationError` will
         be raised if any errors were found.
 
         Args:
@@ -290,8 +277,8 @@ class JsonValidator:
                 ``fail_on_error`` is ``True``.
 
         Side Effects:
-            - Errors from all documents are appended to :attr:`error_list`.
-            - Calls :meth:`log_errors` when ``fail_on_error`` is ``True``.
+            - Errors from all documents are appended to `error_list`.
+            - Calls `log_errors` when ``fail_on_error`` is ``True``.
 
         Examples:
             Robot Framework:
@@ -337,9 +324,9 @@ class JsonValidator:
         """
         Log all collected validation errors in a formatted table.
 
-        This keyword is a public wrapper around the internal :meth:`_log_errors`
+        This keyword is a public wrapper around the internal `_log_errors`
         helper. It outputs all accumulated JSON Schema validation errors stored in
-        :attr:`error_list` as a readable table in the Robot Framework log. The table
+        `error_list` as a readable table in the Robot Framework log. The table
         includes the following columns:
 
             - **Source**: The label or filename identifying the validated document.
@@ -353,7 +340,7 @@ class JsonValidator:
         Side Effects:
             - Writes a formatted table to the Robot Framework log (via ``logger.info``).
             - May also log a summary line at ``logger.error`` level depending on the
-            internal implementation of :meth:`_log_errors`.
+            internal implementation of `_log_errors`.
 
         Examples:
             Robot Framework:
@@ -381,7 +368,7 @@ class JsonValidator:
         log output is formatted with indentation to improve readability.
 
         The method requires that a schema has already been loaded. If no schema
-        is available, an exception is raised by :meth:`_check_schema_loaded`.
+        is available, an exception is raised by `_check_schema_loaded`.
 
         Raises:
             RuntimeError: If no schema has been loaded prior to calling
@@ -409,28 +396,20 @@ class JsonValidator:
         Clear all stored validation errors.
 
         This keyword resets the internal error buffer by replacing
-        :attr:`error_list` with an empty list. It is typically used before running a
+        `error_list` with an empty list. It is typically used before running a
         new validation cycle when collecting errors (i.e., when
         ``fail_on_error`` is set to ``False``).
 
         Side Effects:
-            - Empties :attr:`error_list`.
+            - Empties `error_list`.
 
         Examples:
-            Robot Framework:
-                *** Test Cases ***
-                Reset Validation Errors
-                    Validate    {"invalid": "value"}
-                    Log    ${error_list}    # Shows collected errors
-                    Reset Errors
-                    Should Be Empty    ${error_list}
-
-            Python:
-                >>> v = JsonValidator(fail_on_error=False)
-                >>> v.error_list = [["payload.json", "id", "type", "must be integer"]]
-                >>> v.reset_errors()
-                >>> v.error_list
-                []
+            *** Test Cases ***
+            Reset Validation Errors
+                Validate    {"invalid": "value"}
+                Log    ${error_list}    # Shows collected errors
+                Reset Errors
+                Should Be Empty    ${error_list}
         """
         self.error_list = []
 
@@ -442,11 +421,11 @@ class JsonValidator:
         This keyword removes the active validator instance and marks the schema as
         not loaded. After calling this, any operation requiring a loaded schema
         (such as validation or schema logging) will raise
-        :class:`SchemaNotLoadedError` until a new schema is loaded via
-        :meth:`load_new_schema`.
+        `SchemaNotLoadedError` until a new schema is loaded via
+        `load_new_schema`.
 
         Side Effects:
-            - Sets :attr:`schema_loaded` to ``False``.
+            - Sets `schema_loaded` to ``False``.
             - Deletes the ``validator`` attribute from the instance.
 
         Raises:
@@ -454,20 +433,12 @@ class JsonValidator:
                 If ``self.validator`` does not exist at the time of deletion.
 
         Examples:
-            Robot Framework:
-                *** Test Cases ***
-                Reset Schema Demo
-                    Reset Schema
-                    # Next call will fail because no schema is loaded
-                    Run Keyword And Expect Error    *SchemaNotLoadedError*    Validate    {"id": 1}
+            *** Test Cases ***
+            Reset Schema Demo
+                Reset Schema
+                # Next call will fail because no schema is loaded
+                Run Keyword And Expect Error    STARTS: SchemaNotLoadedError    Validate Json    {"id": 1}
 
-            Python:
-                >>> v = JsonValidator(schema={"type": "object"})
-                >>> v.reset_schema()
-                >>> v.schema_loaded
-                False
-                >>> hasattr(v, "validator")
-                False
         """
         self.schema_loaded = False
         if hasattr(self, "validator"):
@@ -504,13 +475,6 @@ class JsonValidator:
             - Assigns a validator instance to ``self.validator``.
             - May clear or overwrite any previously set validator.
 
-        Examples:
-            >>> from jsonschema import Draft7Validator
-            >>> schema = {"type": "object", "properties": {"id": {"type": "integer"}}}
-            >>> v = JsonValidator(fail_on_error=True)
-            >>> v._set_schema_validator(schema)
-            >>> isinstance(v.validator, Draft7Validator)
-            True
         """
         Validator = jsonschema.validators.validator_for(schema)
         Validator.check_schema(schema)
@@ -522,7 +486,7 @@ class JsonValidator:
         Read and parse a JSON file from disk.
 
         This internal helper opens the file at the given path and loads its
-        contents as JSON. It is used primarily by :meth:`load_new_schema` when
+        contents as JSON. It is used primarily by `load_new_schema` when
         a schema is supplied as a filesystem path rather than a dictionary.
 
         Args:
@@ -542,13 +506,7 @@ class JsonValidator:
                 For other IO‑related errors encountered while opening the file.
 
         Examples:
-            Python:
-                >>> v = JsonValidator()
-                >>> data = v._read_json("schemas/order.schema.json")
-                >>> isinstance(data, dict)
-                True
 
-        Robot Framework (indirect usage via Load New Schema):
             *** Test Cases ***
             Load Schema
                 Load New Schema    ${CURDIR}/schemas/order.schema.json
@@ -563,7 +521,7 @@ class JsonValidator:
         Store validation errors in the internal ``error_list`` buffer.
 
         This internal helper normalizes and appends validation errors produced by
-        the active JSON Schema validator to :attr:`error_list`. Each stored entry
+        the active JSON Schema validator to `error_list`. Each stored entry
         is a 4‑element list with the following structure:
 
             [source, path, validator, message]
@@ -580,7 +538,7 @@ class JsonValidator:
         Args:
             errors:
                 An iterable of validation error objects. Typically instances of
-                :class:`jsonschema.exceptions.ValidationError` or compatible objects
+                `jsonschema.exceptions.ValidationError` or compatible objects
                 with the attributes:
                 - ``path`` (deque/path-like of keys/indices),
                 - ``validator`` (str),
@@ -590,7 +548,7 @@ class JsonValidator:
                 alias). If ``None``, an empty string is stored.
 
         Side Effects:
-            Appends entries to :attr:`error_list`. Existing entries are preserved.
+            Appends entries to `error_list`. Existing entries are preserved.
 
         Notes:
             - ``e.path`` may contain integers (for array indices). To avoid
@@ -598,12 +556,6 @@ class JsonValidator:
             - If you intend to clear previous errors before collecting new ones,
             do so in the caller (e.g., at the beginning of ``validate``).
 
-        Examples:
-            >>> # Suppose 'errs' is a list of jsonschema ValidationError instances
-            >>> v = JsonValidator(fail_on_error=False)
-            >>> v.error_list = []
-            >>> v._set_errors(errs, source="payload.json")
-            >>> # Each entry becomes: [ "payload.json", "root.field.0", "type", "must be integer" ]
         """
         for e in errors:
             self.error_list.append(
@@ -615,7 +567,7 @@ class JsonValidator:
         """
         Log all collected validation errors in a formatted table.
 
-        This keyword outputs the contents of :attr:`error_list` as a readable
+        This keyword outputs the contents of `error_list` as a readable
         table to the test log, using ``tabulate`` for formatted rendering. Each
         row in the table represents a single validation error, containing:
 
@@ -632,18 +584,11 @@ class JsonValidator:
             - Writes a formatted table to the Robot Framework log (via ``logger.error``).
 
         Examples:
-            Robot Framework:
-                *** Test Cases ***
-                Show Validation Errors
-                    Validate Json    invalid.json
-                    Log Errors
+            *** Test Cases ***
+            Show Validation Errors
+                Validate Json    invalid.json
+                Log Errors
 
-            Python:
-                >>> v = JsonValidator(fail_on_error=False)
-                >>> v.error_list = [
-                ...     ["item 1", "id", "type", "must be integer"]
-                ... ]
-                >>> v.log_errors()  # Logs a formatted table
         """
         if len(self.error_list) > 0:
             logger.error(
@@ -656,30 +601,20 @@ class JsonValidator:
 
     @not_keyword
     def _check_schema_loaded(self):
-        """Ensure that a JSON Schema has been loaded before validation.
+        """
+        Ensure that a JSON Schema has been loaded before validation.
 
         This internal guard method is used by operations that require an active
         schema (e.g., validation, schema logging). If no schema has been loaded,
-        an error is logged and a :class:`SchemaNotLoadedError` is raised.
+        an error is logged and a `SchemaNotLoadedError` is raised.
 
         Raises:
             SchemaNotLoadedError:
                 If no schema has been loaded into the validator instance.
 
         Side Effects:
-            - Logs an error message via the module logger when no schema is loaded.
+            - Logs an error message via the module robot.logger when no schema is loaded.
 
-        Examples:
-            >>> v = JsonValidator()
-            >>> v.schema_loaded
-            False
-            >>> v._check_schema_loaded()
-            Traceback (most recent call last):
-                ...
-            SchemaNotLoadedError: No JSONSchema loaded
-
-            >>> v = JsonValidator(schema={"type": "object"})
-            >>> v._check_schema_loaded()   # No exception
         """
         if not self.schema_loaded:
             logger.error("No Schema Loaded To Validate Against")
