@@ -42,8 +42,6 @@ jobs:
       - build_package
     permissions: 
      id-token: write
-    environment:
-     name: testpypi
 
     steps:
       - name: Retrieve release dist
