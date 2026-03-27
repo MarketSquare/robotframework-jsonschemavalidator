@@ -1,0 +1,35 @@
+name: Build and Publish to TestPyPI
+ 
+on:
+  push:
+    branches:
+      - main # Trigger on push to the main branch
+
+jobs:
+  build-and-publish:
+    name: build and upload release to TestPyPi
+    runs-on: ubuntu-latest
+    environment: testpypi
+    permissions:
+        id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+ 
+      - name: Set up UV
+        uses: astral-sh/setup-uv@v7.6.0
+        with:
+          version: '0.11.1' # Use the latest Python 3 version
+    
+      - name: Install Python
+        run: uv python install 3.11
+    
+      - name: Install dependencies
+        run: uv sync
+ 
+      - name: Build package with Uv
+        run: uv build # Build source distribution and wheel
+ 
+      - name: Publish to TestPyPI with Trusted Publisher
+        run: uv publish --index testpypi
