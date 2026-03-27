@@ -1,0 +1,32 @@
+name: Test package
+
+on:
+  push:
+    branches:
+        - main
+
+jobs:
+    test:
+       name: Exeute Tests
+       runs-on: ubuntu-latest
+       strategy:
+        matrix:
+            python-version:
+                - "3.11"
+                - "3.12"
+                - "3.13"
+                - "3.14"
+       steps:
+        - uses: actions/checkout@v6
+          with:
+            persist-credentials: false
+        - name: Setup UV
+          uses: astral-sh/setup-uv@v7.6.0
+          with:
+            version: 0.11.2
+            python-version: ${{ matrix.python-version}}
+        - name: install project
+          run: uv sync --locked --dev
+
+        - name: run Test
+          run: uv run robot test/atest.robot
