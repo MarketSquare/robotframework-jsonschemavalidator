@@ -1,12 +1,12 @@
 name: Build and Publish to TestPyPI
  
 on:
- push:
-  branches:
-   - main
+ release:
+  types: published
 
 
 jobs:
+  
   build_package:
     runs-on: ubuntu-latest
 
@@ -26,6 +26,9 @@ jobs:
 
       - name: Install dependencies
         run: uv sync
+
+      - name: Increase version
+        run: uv version --bump rc 
 
       - name: Build Package
         run: uv build
