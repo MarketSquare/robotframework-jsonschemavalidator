@@ -1,9 +1,9 @@
 name: Build and Publish to TestPyPI
  
 on:
- release:
-  types: published
-
+ push:
+  branches:
+    - main
 
 jobs:
   
