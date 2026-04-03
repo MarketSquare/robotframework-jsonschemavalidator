@@ -34,6 +34,7 @@ dev = [
     "black>=26.1.0",
     "docutils>=0.22.4",
     "jsonschema>=4.26.0",
+    "pygments>=2.20.0",
     "robotcode>=2.2.0",
     "robotframework>=7.4.1",
     "ruff>=0.14.14",
