@@ -28,7 +28,7 @@ jobs:
         run: uv sync
 
       - name: Increase version
-        run: uv version --bump minor 
+        run: uv version --bump rc 
 
       - name: Build Package
         run: uv build
