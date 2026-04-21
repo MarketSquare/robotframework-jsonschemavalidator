@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@v6
         with: 
             persist-credentials: false
+            fetch-depth: 0
  
       - name: Set up UV
         uses: astral-sh/setup-uv@v7.6.0
@@ -24,11 +25,20 @@ jobs:
       - name: Install Python
         run: uv python install 3.11
 
+      - name: Run semantic-versioning
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: | #shell
+          sr() {
+            uvx --from="python-semantic-release@9.21.1" \
+	            semantic-release "$@"
+          }
+
+          sr version
+          sr publish
+
       - name: Install dependencies
         run: uv sync
-
-      - name: Increase version
-        run: uv version --bump patch rc 
 
       - name: Build Package
         run: uv build
