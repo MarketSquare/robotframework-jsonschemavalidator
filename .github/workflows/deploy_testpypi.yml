@@ -25,17 +25,11 @@ jobs:
       - name: Install Python
         run: uv python install 3.11
 
-      - name: Run semantic-versioning
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: | #shell
-          sr() {
-            uvx --from="python-semantic-release@9.21.1" \
-	            semantic-release "$@"
-          }
-
-          sr version
-          sr publish
+      - name: Semantic Release versioning
+	    uses: python-semantic-release/python-semantic-release@v10.5.3
+		with:
+			github_token: ${{ secrets.GITHUB_TOKEN }}
+			
 
       - name: Install dependencies
         run: uv sync
