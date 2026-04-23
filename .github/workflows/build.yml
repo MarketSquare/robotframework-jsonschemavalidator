@@ -79,7 +79,7 @@ jobs:
     permissions:
       contents: write
 
-steps:
+    steps:
       - name: Setup | Checkout Repository on Release Branch
         uses: actions/checkout@v6
         with:
@@ -124,3 +124,6 @@ steps:
       released: ${{ steps.release.outputs.released }}
       new-release-version: ${{ steps.release.outputs.version }}
       new-release-tag: ${{ steps.release.outputs.tag }}
+
+      
+ 
