@@ -40,7 +40,7 @@ jobs:
         run: uv run semantic-release -v version --no-changelog --no-commit --no-tag
 
       - name: Upload | Distribution Artifact
-        if: ${{ steps.version.outputs.release == 'true' }}
+        if: ${{ steps.version.outputs.released == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: release-dist
