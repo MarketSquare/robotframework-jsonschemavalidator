@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.0.4 (2026-04-23)
+
+### Bug Fixes
+
+- Update pyproject.toml
+  ([`eb971d4`](https://github.com/MarketSquare/robotframework-jsonvalidator/commit/eb971d4629e6ab4c4c2ca63304a750f2ab1303cb))
+
+
 ## v0.0.3 (2026-04-23)
 
 ### Bug Fixes
