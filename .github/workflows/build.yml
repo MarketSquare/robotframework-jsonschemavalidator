@@ -38,3 +38,12 @@ jobs:
         env:
           GH_TOKEN: 'none'
         run: uv run semantic-release -v version --no-changelog --no-commit --no-tag
+
+      - name: Upload | Distribution Artifact
+        if: ${{ steps.version.outputs.release == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.dist_artifacts_name }}
+          path: ${{ format( '{0}/**', env.dist_artifacts_dir) }}
+          if-no-files-found: error
+          retention-days: 2
