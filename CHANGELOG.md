@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.0.2 (2026-04-23)
+
+### Bug Fixes
+
+- Add build command semantic release
+  ([`70045de`](https://github.com/MarketSquare/robotframework-jsonvalidator/commit/70045de676762f0f1e338f238ffffa87b89afd90))
+
+
 ## v0.0.1 (2026-04-23)
 
 ### Bug Fixes
