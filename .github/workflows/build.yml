@@ -47,3 +47,21 @@ jobs:
           path: ${{ format( '{0}/**', env.dist_artifacts_dir) }}
           if-no-files-found: error
           retention-days: 2
+          
+      - name: Upload | Lock File Artifact
+        if: ${{ steps.version.outputs.released == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.lock_file_artifact  }}
+          path: ${{ env.lock_file_artifact }}
+          if-no-files-found: error
+          retention-days: 2
+          
+    outputs:
+      new-release-detected: ${{ steps.version.outputs.released }}
+      new-release-version: ${{ steps.version.outputs.version }}
+      new-release-tag: ${{ steps.version.outputs.tag }}
+      new-release-is-prerelease: ${{ steps.version.outputs.is_prereleaes }}
+      distribution-artifacts: ${{ env.dist_artifacts_name }}
+      lock-file-artifact: ${{ env.lock_file_artifact }}
+          
