@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.1.1 (2026-04-23)
+
+### Bug Fixes
+
+- Update deploy.yml
+  ([`0b6ce3e`](https://github.com/MarketSquare/robotframework-jsonvalidator/commit/0b6ce3e02e4ac38dbf10b9dbf48eb57ee100dd94))
+
+
 ## v0.1.0 (2026-04-23)
 
 ### Features
