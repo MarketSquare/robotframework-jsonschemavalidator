@@ -43,7 +43,7 @@ jobs:
         if: ${{ steps.version.outputs.released == 'true' }}
         uses: actions/upload-artifact@v4
         with:
-          name: release-dist
+          name: ${{ env.dist_artifacts_name }}
           path: dist/
           if-no-files-found: error
           retention-days: 2
