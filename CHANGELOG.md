@@ -1,6 +1,16 @@
 # CHANGELOG
 
 
+## v0.1.0 (2026-04-23)
+
+### Features
+
+- Create deploy.yml
+  ([`2d25490`](https://github.com/MarketSquare/robotframework-jsonvalidator/commit/2d254908841a0e955d24f1993337d9b603184b87))
+
+added deploy workflow to release automatically to testpipy
+
+
 ## v0.0.5 (2026-04-23)
 
 ### Bug Fixes
