@@ -29,3 +29,12 @@ jobs:
 
       - name: Install UV Python
         run: uv python install 3.13
+
+      - name: Install dependencies
+        run: uv sync --extra release
+
+      - name: Build | Next Version
+        id: version
+        env:
+          GH_TOKEN: 'none'
+        run: uv run semantic-release -v version --no-changelog --no-commit --no-tag
