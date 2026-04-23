@@ -64,4 +64,63 @@ jobs:
       new-release-is-prerelease: ${{ steps.version.outputs.is_prereleaes }}
       distribution-artifacts: ${{ env.dist_artifacts_name }}
       lock-file-artifact: ${{ env.lock_file_artifact }}
-          
+
+  release:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+
+    if: ${{ needs.build.outputs.new-release-detected == 'true' }}
+
+    concurrency:
+      group: ${{ github.workflow }}-release=${{ github.ref_name }}
+      cancel-in-progress: false
+
+    permissions:
+      contents: write
+
+steps:
+      - name: Setup | Checkout Repository on Release Branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Setup | Force release branch to be at workflow sha
+        run: git reset --hard ${{ github.sha }}
+
+      - name: Setup | Install uv
+        uses: astral-sh/setup-uv@v7.6.0
+        with:
+          version: '0.11.1'
+
+      - name: Setup | Install Python & Project dependencies
+        run: uv sync
+
+      - name: Setup | Download Build Artifacts
+        uses: actions/download-artifac@v4
+        id: artifact-download
+        with:
+          name: ${{ needs.build.outputs.distribution-artifacts }}
+          path: dist
+
+      - name: Setup | Download Lock File Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.build.outputs.lock-file-artifact }}
+
+      - name: Setup | Stage Lock File for Version Commit
+        run: git add uv.lock
+
+      - name: Release | Create Release
+        id: release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          uv run semantic-release -v --strict version --skip-build
+          uv run semantic-release publish
+
+    outputs:
+      released: ${{ steps.release.outputs.released }}
+      new-release-version: ${{ steps.release.outputs.version }}
+      new-release-tag: ${{ steps.release.outputs.tag }}
