@@ -42,10 +42,9 @@ release = [
 ]
 
 [tool.semantic_release]
-build_command = """
-    uv lock --upgrade-package "$PACKAGE_NAME"
-    uv build
-"""
+commit_parser = "conventional"
+version_toml = ["pyproject.toml:project.version"]
+allow_zero_version = true
 
 [tool.semantic_release.changelog.default_templates]
 changelog_file = "CHANGELOG.md"
