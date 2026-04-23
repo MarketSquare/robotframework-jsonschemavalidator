@@ -47,3 +47,4 @@ jobs:
             uv publish --index https://upload.pypi.org/legacy/
           else
             uv publish --index https://test.pypi.org/legacy/
+          fi
