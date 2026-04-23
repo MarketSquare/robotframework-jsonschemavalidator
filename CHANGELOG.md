@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.1.3 (2026-04-23)
+
+### Bug Fixes
+
+- Switched workflow naming
+  ([`52b91e5`](https://github.com/MarketSquare/robotframework-jsonvalidator/commit/52b91e5b14d1434def4d22cb5f951240565f75f1))
+
+
 ## v0.1.2 (2026-04-23)
 
 ### Bug Fixes
