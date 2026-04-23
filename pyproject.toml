@@ -45,9 +45,7 @@ release = [
 commit_parser = "conventional"
 version_toml = ["pyproject.toml:project.version"]
 allow_zero_version = true
-build_command = """
-    uv build
-"""
+build_command = "uv build"
 
 [tool.semantic_release.changelog.default_templates]
 changelog_file = "CHANGELOG.md"
