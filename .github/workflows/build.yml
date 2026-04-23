@@ -94,7 +94,7 @@ jobs:
           version: '0.11.1'
 
       - name: Setup | Install Python & Project dependencies
-        run: uv sync
+        run: uv sync --group release --no-dev
 
       - name: Setup | Download Build Artifacts
         uses: actions/download-artifact@v4
