@@ -1,0 +1,90 @@
+name: Build and Publish to TestPyPI
+ 
+on:
+ push:
+  branches:
+    - main
+
+jobs:
+  
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      dist_artifacts_name: dist
+      dist_artifacts_dir: dist
+      lock_file_artifact: uv.lock
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with: 
+            persist-credentials: false
+            fetch-depth: 0
+ 
+      - name: Set up UV
+        uses: astral-sh/setup-uv@v7.6.0
+        with:
+          version: '0.11.1'
+
+      - name: Install Python with UV
+        run: uv python install 3.13
+
+			
+    #   - name: Install dependencies
+    #     run: uv sync --extra release
+
+    #   - name: Build Package next version
+    #     id: version
+    #     env:
+    #       GH_TOKEN: "none"
+    #     run: uv run semantic-release -v version -no-changelog --no-commit --no-tag
+
+    #   - name: Upload | Distribution Artifact
+    #     if: ${{ steps.version.outputs.release == 'true'}}
+    #     uses: actions/upload-artifact@v4
+    #     with:
+    #       name: ${{ env.dist_artifacts_name }}
+    #       path: ${{ format( '{0}/**', env.dist_artifacts_dir)}}
+    #       if-no-files-found: error
+    #       retention-days: 2
+      
+    #   - name: Upload | Lock File Artifact
+    #     if: ${{ steps.version.outputs.released == 'true' }}
+    #     uses: actions/upload-artifact@v4
+    #     with:
+    #       name: ${{ env.lock_file_artifact }}
+    #       path: ${{ env.lock_file_artifact }}
+    #       if-no-files-found: error
+    #       retention-days: 2
+          
+    # outputs:
+    #   new-release-detected: ${{ steps.version.outputs.released }}
+    #   new-release-version: ${{ steps.version.outputs.version }}
+    #   new-release-tag: ${{ steps.version.outputs.tag }}
+    #   new-release-is-prerelease: ${{ steps.version.outputs.is_prerelease }}
+    #   distribution-artifacts: ${{ env.dist_artifacts_name }}
+    #   lock-file-artifact: ${{ env.lock_file_artifact }}  
+
+  # publish_testpypi:
+  #   runs-on: ubuntu-latest
+  #   needs:
+  #     - build_package
+  #   environment: testpypi
+  #   permissions: 
+  #    id-token: write
+
+  #   steps:
+  #     - name: Retrieve release dist
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: release-dist
+  #         path: dist/
+          
+  #     - name: Publish package distributions to TestPyPI
+  #       uses: pypa/gh-action-pypi-publish@release/v1
+  #       with:
+  #         repository-url: https://test.pypi.org/legacy/
+  #         packages-dir: dist/
+
