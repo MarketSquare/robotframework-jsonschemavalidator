@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.0.3 (2026-04-23)
+
+### Bug Fixes
+
+- Sr build command
+  ([`c4f5d66`](https://github.com/MarketSquare/robotframework-jsonvalidator/commit/c4f5d660c2f3cfebda58facf6023312ad3c51a8e))
+
+
 ## v0.0.2 (2026-04-23)
 
 ### Bug Fixes
