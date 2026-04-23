@@ -41,10 +41,8 @@ jobs:
       - name: Build package
         run: uv build
 
-      - name: Publish to TestPyPI or PyPI
-        run: |
-          if [ "${{ github.event.inputs.target }}" = "pypi" ]; then
-            uv publish --index https://upload.pypi.org/legacy/
-          else
-            uv publish --index https://test.pypi.org/legacy/
-          fi
+      - name: Publish to TestPyPI
+        if: inputs.target == 'testpypi'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
