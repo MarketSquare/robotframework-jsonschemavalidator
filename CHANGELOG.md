@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.1.5 (2026-04-24)
+
+### Bug Fixes
+
+- Update deploy_testpypi.yml
+  ([`c3999a8`](https://github.com/MarketSquare/robotframework-jsonvalidator/commit/c3999a83e3121ca3f8e9a848f049e4948b63f81e))
+
+
 ## v0.1.4 (2026-04-24)
 
 ### Bug Fixes
