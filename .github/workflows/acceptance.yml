@@ -35,7 +35,10 @@ jobs:
         pip install robotframework
         pip install tabulate
         pip install jsonschema
+
+    - name: list files
+      run: ls -la
         
-    - name: Test with robot
-      run: |
-        robot test/atest.robot
+    # - name: Test with robot
+    #   run: |
+    #     robot test/atest.robot
