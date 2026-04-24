@@ -44,6 +44,17 @@ dev = [
 ]
 release = ["python-semantic-release>=10.5.3"]
 
+[tool.uv]
+conflicts = [
+    [
+        {extra = "rf70"},
+        {extra = "rf71"},
+        {extra = "rf72"},
+        {extra = "rf73"},
+        {extra = "rf74"},
+    ]
+]
+
 [tool.semantic_release]
 commit_parser = "conventional"
 version_toml = ["pyproject.toml:project.version"]
