@@ -35,21 +35,3 @@ jobs:
 
           sr version
           sr publish
-      
-      - name: Create Keyword File
-        run: |
-          uvx --from="robotframework" libdoc robotframework-jsonschemavalidator.jsonschemavalidator docs/jsonschemavalidator.html
-
-      
-      - name: Commit and push docs
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add docs
-          if git diff --cached --quiet; then
-            echo "No documentation changes"
-          else
-            git commit -m "docs: update Robot Framework Libdoc"
-            git push
-          fi
