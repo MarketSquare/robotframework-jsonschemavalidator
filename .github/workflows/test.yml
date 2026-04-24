@@ -15,11 +15,11 @@ jobs:
               - "3.13"
               - "3.14"
             rf_group:
-              - "rf70"
-              - "rf71"
-              - "rf72"
-              - "rf73"
-              - "rf74"
+              - rf70
+              - rf71
+              - rf72
+              - rf73
+              - rf74
         
        steps:
         - uses: actions/checkout@v6
