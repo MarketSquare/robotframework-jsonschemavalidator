@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        required: true
+        required: false
     
     
 permissions:
