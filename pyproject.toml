@@ -26,25 +26,11 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-rf70 = [
-    "robotframework>=7.0.0,<7.1.0"
-]
-
-rf71 = [
-    "robotframework>=7.1.0,<7.2.0"
-]
-
-rf72 = [
-    "robotframework>=7.2.0,<7.3.0"
-]
-
-rf73 = [
-    "robotframework>=7.3.0,<7.4.0"
-]
-
-rf74 = [
-    "robotframework>=7.4.0,<7.5.0"
-]
+rf70 = ["robotframework>=7.0.0,<7.1.0"]
+rf71 = ["robotframework>=7.1.0,<7.2.0"]
+rf72 = ["robotframework>=7.2.0,<7.3.0"]
+rf73 = ["robotframework>=7.3.0,<7.4.0"]
+rf74 = ["robotframework>=7.4.0,<7.5.0"]
 
 [dependency-groups]
 dev = [
@@ -56,29 +42,7 @@ dev = [
     "ruff>=0.14.14",
     "tabulate>=0.9.0",
 ]
-release = [
-    "python-semantic-release>=10.5.3",
-]
-
-rf70 = [
-    "robotframework>=7.0.0,<7.1.0"
-]
-
-rf71 = [
-    "robotframework>=7.1.0,<7.2.0"
-]
-
-rf72 = [
-    "robotframework>=7.2.0,<7.3.0"
-]
-
-rf73 = [
-    "robotframework>=7.3.0,<7.4.0"
-]
-
-rf74 = [
-    "robotframework>=7.4.0,<7.5.0"
-]
+release = ["python-semantic-release>=10.5.3"]
 
 [tool.semantic_release]
 commit_parser = "conventional"
