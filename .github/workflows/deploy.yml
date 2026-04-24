@@ -1,0 +1,42 @@
+name: Publish to PyPi
+
+on:
+  # Manual Dispatch of release
+ workflow_dispatch:
+    inputs:
+      target:
+        description: "Publish target"
+        required: true
+        type: choice
+        default: pypi
+        options:
+          - pypi
+       
+permissions:
+  contents: read
+  id-token: write   # nodig voor trusted publishing
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    # Dynamisch environment kiezen
+    environment: 'pypi'
+
+    steps:
+      - name: Checkout exact release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Build package
+        run: uv build
+
+      - name: Publish | PyPi
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+

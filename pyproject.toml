@@ -5,16 +5,23 @@ description = "A lightweight JSON Schema validation library for Robot Framework 
 readme = "README.md"
 license = "Apache-2.0"
 authors = [
-    { name = "Mickel Jacobs", email = "avenstar90@gmail.com" }
+    { name = "Mickel Jacobs" }
 ]
 classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Programming Language :: Python :: 3 :: Only",
     "License :: OSI Approved :: Apache Software License",
-    "Framework :: Robot Framework",
+    "Framework :: Robot Framework 7.0",
+    "Framework :: Robot Framework 7.1",
+    "Framework :: Robot Framework 7.2",
+    "Framework :: Robot Framework 7.3",
+    "Framework :: Robot Framework 7.4",
     "Topic :: Software Development :: Testing",
+    "Topic :: Software Development :: Test Automtion",
 ]
 keywords = ["robotframework", "json", "jsonschema", "validation", "test-library", "test", "testing", "test-automation"]
 
