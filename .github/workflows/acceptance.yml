@@ -1,7 +1,5 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Python Acceptance
+name: Acceptance test Test-PyPi
 
 on:
   workflow_run:
@@ -28,7 +26,7 @@ jobs:
         
     - name: Install dependencies
       run: |
-        pip install -i https://test.pypi.org/simple/ robotframework-jsonvalidator
+        pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple robotframework-jsonvalidator
         pip install robotframework
         
     - name: Test with pytest
