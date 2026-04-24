@@ -7,7 +7,7 @@ Designed for clarity, reliability, and maintainability, it provides meaningful d
 
 ## 🚀 Overview
 
-`robotframework-jsonvalidator` enables automated test suites to validate JSON payloads using standard JSON Schemas.  
+`robotframework-jsonschemavalidator` enables automated test suites to validate JSON payloads using standard JSON Schemas.  
 It offers configurable validation behavior and clean logging to support both small and large‑scale test automation.
 
 This library focuses on:
@@ -43,26 +43,26 @@ This library focuses on:
 ### Using uv (recommended)
 
 ```bash
-uv add robotframework-jsonvalidator
+uv add robotframework-jsonschemavalidator
 ```
 
 ### Using poetry
 
 ```bash
-poetry add robotframework-jsonvalidator
+poetry add robotframework-jsonschemavalidator
 ```
 
 ### Using pip
 
 ```bash
-pip install robotframework-jsonvalidator
+pip install robotframework-jsonschemavalidator
 ```
 
 This makes the library available to Robot Framework as:
 
 ```robot
 *** Settings ***
-Library    JsonValidator
+Library    JsonSchemaValidator
 ```
 
 ---
@@ -70,12 +70,12 @@ Library    JsonValidator
 ## 🧱 Project Structure
 
 ```txt
-robotframework-jsonvalidator/
+robotframework-jsonschemavalidator/
 ├─ pyproject.toml
 ├─ src/
-│   └─ JsonValidator/
+│   └─ JsonSchemaValidator/
 │       ├─ __init__.py
-│       ├─ JsonValidator.py   # Core implementation
+│       ├─ JsonSchemaValidator.py   # Core implementation
 │       └─ errors.py
 └─ tests/
     └─ atest.robot
