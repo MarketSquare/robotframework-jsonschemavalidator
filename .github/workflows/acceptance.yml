@@ -44,15 +44,15 @@ jobs:
         pip install robotframework
         pip install tabulate
         pip install jsonschema
-        pip install --index-url https://test.pypi.org/simple/ robotframework-jsonvalidator
-        python -c "import JsonValidator, inspect; print('JsonValidator loaded from:', getattr(JsonValidator, '__file__', '<no __file__>'))"
-        python -m pip show -f robotframework-jsonvalidator
-        python -m pip show -f JsonValidator || true
+        pip install --index-url https://test.pypi.org/simple/ robotframework-jsonschemavalidator
+        python -c "import JsonValidator, inspect; print('JsonValidator loaded from:', getattr(JsonSchemaValidator, '__file__', '<no __file__>'))"
+        python -m pip show -f robotframework-jsonschemavalidator
+        python -m pip show -f JsonSchemaValidator || true
         python -m pip list | grep -i json || true
         ``
 
     - name: Validate Keywords exist
-      run: python -m robot.libdoc JsonValidator list
+      run: python -m robot.libdoc JsonSchemaValidator list
         
     - name: Test with robot
       run: |
