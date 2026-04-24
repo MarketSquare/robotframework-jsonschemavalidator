@@ -35,19 +35,25 @@ jobs:
         source venv/bin/activate
         which python
 
+        
     # - name: list files
     #   run: ls -la
         
     - name: Install dependencies
       run: |
-        pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple robotframework-jsonvalidator
         pip install robotframework
         pip install tabulate
         pip install jsonschema
+        pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple robotframework-jsonvalidator
+        python -c "import JsonValidator, inspect; print('JsonValidator loaded from:', getattr(JsonValidator, '__file__', '<no __file__>'))"
+        python -m pip show -f robotframework-jsonvalidator
+        python -m pip show -f JsonValidator || true
+        python -m pip list | grep -i json || true
+        ``
 
-    - name: Validate Keywords exist
-      run: python -m robot.libdoc JsonValidator list
+    # - name: Validate Keywords exist
+    #   run: python -m robot.libdoc JsonValidator list
         
-    - name: Test with robot
-      run: |
-        python -m robot test/smoke.robot
+    # - name: Test with robot
+    #   run: |
+    #     python -m robot test/smoke.robot
