@@ -31,7 +31,7 @@ jobs:
             python-version: ${{ matrix.python-version}}
 
         - name: install project
-          run: uv sync --extra ${{ matrix.rf_group}}
+          run: uv sync --only-group dev --only-group ${{ matrix.rf_group}}
 
         - name: run Test
           run: uv run robot test/atest.robot
