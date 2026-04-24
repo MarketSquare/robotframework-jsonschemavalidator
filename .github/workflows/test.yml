@@ -14,6 +14,8 @@ jobs:
               - "3.12"
               - "3.13"
               - "3.14"
+            rf_version:
+              - "rf70"
        steps:
         - uses: actions/checkout@v6
           with:
@@ -25,7 +27,7 @@ jobs:
             python-version: ${{ matrix.python-version}}
 
         - name: install project
-          run: uv sync  --extra rf70
+          run: uv sync  --extra ${{ matrix.rf_version}}
 
         - name: run Test
           run: uv run robot test/atest.robot
