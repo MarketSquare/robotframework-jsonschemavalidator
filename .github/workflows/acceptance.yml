@@ -29,23 +29,23 @@ jobs:
       with:
         python-version: "3.14"
 
-    - name: create venv
+    - name: create and activate venv
       run: |
         python -m venv venv
         source venv/bin/activate
         which python
 
-    - name: list files
-      run: ls -la
+    # - name: list files
+    #   run: ls -la
         
-    # - name: Install dependencies
-    #   run: |
-    #     pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple robotframework-jsonvalidator
-    #     pip install robotframework
-    #     pip install tabulate
-    #     pip install jsonschema
+    - name: Install dependencies
+      run: |
+        pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple robotframework-jsonvalidator
+        pip install robotframework
+        pip install tabulate
+        pip install jsonschema
 
         
-    # - name: Test with robot
-    #   run: |
-    #     robot test/atest.robot
+    - name: Test with robot
+      run: |
+        python -m robot test/atest.robot
