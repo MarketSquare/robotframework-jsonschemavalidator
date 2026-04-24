@@ -36,7 +36,7 @@ jobs:
             python-version: ${{ matrix.python-version}}
 
         - name: install project
-          run: uv sync --extra ${{ matrix.rf_version}}
+          run: uv sync --extra ${{ matrix.rf_version}} --no-dev
 
         - name: run Test
           run: uv run robot test/atest.robot
