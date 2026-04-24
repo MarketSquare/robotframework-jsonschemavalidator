@@ -48,4 +48,4 @@ jobs:
         
     - name: Test with robot
       run: |
-        python -m robot test/atest.robot
+        python -m robot test/smoke.robot
