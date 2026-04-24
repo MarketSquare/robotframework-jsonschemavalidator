@@ -18,6 +18,7 @@ jobs:
               - "3.14"
             rf_version:
               - "rf70"
+              - "rf71"
          
        steps:
         - uses: actions/checkout@v6
