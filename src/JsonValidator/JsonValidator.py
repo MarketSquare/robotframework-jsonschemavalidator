@@ -1,12 +1,12 @@
 import jsonschema
 import json
-from robot.api.deco import keyword, not_keyword
+from robot.api.deco import keyword, not_keyword, library
 import robot.api.logger as logger
 from . import validation_errors
 from typing import Any, Optional
 import tabulate
 
-
+@library
 class JsonValidator:
     """
     *JSON Validator*
