@@ -1,16 +1,10 @@
-name: Publish package
+name: Publish TestPyPi package
 
 on:
   # Manual Dispatch of release
-  workflow_dispatch:
-    inputs:
-      target:
-        description: "Publish target"
-        required: true
-        type: choice
-        default: testpypi
-        options:
-          - testpypi
+  push:
+    tags:
+      - 'v*'
 
 permissions:
   contents: read
