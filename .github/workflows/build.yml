@@ -38,7 +38,7 @@ jobs:
       
       - name: Create Keyword File
         run: |
-          uvx --from="robotframework" robot.libdoc robotframework-jsonschemavalidator.jsonschemavalidator docs/jsonschemavalidator.html
+          uvx --from="robotframework" libdoc robotframework-jsonschemavalidator.jsonschemavalidator docs/jsonschemavalidator.html
 
       
       - name: Commit and push docs
