@@ -2,14 +2,10 @@
 name: Acceptance test Test-PyPi
 
 on:
-  # workflow_run:
-  #   workflows: ["Publish TestPyPi package"]
-  #   types:
-  #     - completed
-  workflow_dispatch:
-    inputs:
-      target:
-        required: false
+  workflow_run:
+    workflows: ["Publish TestPyPi package"]
+    types:
+      - completed
     
     
 permissions:
@@ -17,7 +13,7 @@ permissions:
 
 jobs:
   acceptance:
-    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Test Package Release
     runs-on: ubuntu-latest
 
