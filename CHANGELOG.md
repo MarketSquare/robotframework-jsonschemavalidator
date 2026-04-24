@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.1.8 (2026-04-24)
+
+### Bug Fixes
+
+- Library decorator toe gevoegd
+  ([`9e32c34`](https://github.com/MarketSquare/robotframework-jsonvalidator/commit/9e32c34096ca94522d9825412376e06852df6604))
+
+
 ## v0.1.7 (2026-04-24)
 
 ### Bug Fixes
