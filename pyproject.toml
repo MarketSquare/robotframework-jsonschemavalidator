@@ -22,7 +22,7 @@ keywords = ["robotframework", "json", "jsonschema", "validation", "test-library"
 requires-python = ">=3.10,<4.0"
 dependencies = [
     "jsonschema>=4.26.0",
-    "robotframework>=7.0.0,<8.0.0",
+    # "robotframework>=7.0.0,<8.0.0",
     "tabulate>=0.9.0",
 ]
 
@@ -42,23 +42,23 @@ release = [
 ]
 
 rf70 = [
-    "robotframework==7.0.1"
+    "robotframework>=7.0.0,<7.1.0"
 ]
 
 rf71 = [
-    "robotframework==7.1.1"
+    "robotframework>=7.1.0,<7.2.0"
 ]
 
 rf72 = [
-    "robotframework==7.2.2"
+    "robotframework>=7.2.0,<7.3.0"
 ]
 
 rf73 = [
-    "robotframework==7.3.2"
+    "robotframework>=7.3.0,<7.4.0"
 ]
 
 rf74 = [
-    "robotframework==7.4.2"
+    "robotframework>=7.4.0,<7.5.0"
 ]
 
 [tool.semantic_release]
