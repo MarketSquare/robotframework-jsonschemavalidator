@@ -32,7 +32,7 @@ jobs:
     - name: create venv
       run: |
         python -m venv venv
-        source .venv/bin/activate
+        source venv/bin/activate
         which python
 
     - name: list files
