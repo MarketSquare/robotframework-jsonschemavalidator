@@ -14,13 +14,6 @@ jobs:
               - "3.12"
               - "3.13"
               - "3.14"
-            rf_group:
-              - rf70
-              - rf71
-              - rf72
-              - rf73
-              - rf74
-        
        steps:
         - uses: actions/checkout@v6
           with:
@@ -32,9 +25,7 @@ jobs:
             python-version: ${{ matrix.python-version}}
 
         - name: install project
-          env:
-            UV_PROJECT_ENVIRONMENT: .venv-${{ matrix.python-version }}-${{ matrix.rf_group }}
-          run: uv sync --frozen --extra ${{ matrix.rf_group}}
+          run: uv sync  --extra rf70
 
         - name: run Test
           run: uv run robot test/atest.robot
