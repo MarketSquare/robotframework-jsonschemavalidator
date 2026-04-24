@@ -22,6 +22,8 @@ jobs:
               - "rf72"
               - "rf73"
               - "rf74"
+       env:
+         UV_PROJECT_ENVIRONMENT: .venv-${{ matrix.python-version }}-${{ matrix.rf_version }}
          
        steps:
         - uses: actions/checkout@v6
