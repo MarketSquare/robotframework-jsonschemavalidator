@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.1.1 (2026-04-24)
+
+### Bug Fixes
+
+- Update build.yml
+  ([`752adac`](https://github.com/MarketSquare/robotframework-jsonschemavalidator/commit/752adac9f08f7dff3bff8cdaaec8be7dee90f309))
+
+
 ## v0.1.0 (2026-04-24)
 
 ### Bug Fixes
