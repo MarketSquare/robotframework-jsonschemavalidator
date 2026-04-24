@@ -45,7 +45,7 @@ jobs:
         pip install tabulate
         pip install jsonschema
         pip install --index-url https://test.pypi.org/simple/ robotframework-jsonschemavalidator
-        python -c "import JsonValidator, inspect; print('JsonValidator loaded from:', getattr(JsonSchemaValidator, '__file__', '<no __file__>'))"
+        python -c "import JsonSchemaValidator, inspect; print('JsonValidator loaded from:', getattr(JsonSchemaValidator, '__file__', '<no __file__>'))"
         python -m pip show -f robotframework-jsonschemavalidator
         python -m pip show -f JsonSchemaValidator || true
         python -m pip list | grep -i json || true
