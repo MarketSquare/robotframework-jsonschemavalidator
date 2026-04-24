@@ -1,5 +1,5 @@
 [project]
-name = "robotframework-jsonvalidator"
+name = "robotframework-jsonschemavalidator"
 version = "0.2.0"
 description = "A lightweight JSON Schema validation library for Robot Framework with clear error reporting and flexible validation modes."
 readme = "README.md"
@@ -76,5 +76,5 @@ requires = ["uv_build>=0.11.0,<0.12.0"]
 build-backend = "uv_build"
 
 [tool.uv.build-backend]
-module-name = "JsonValidator"
+module-name = "JsonSchemaValidator"
 

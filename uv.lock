@@ -3,11 +3,11 @@ requires-python = ">=3.10, <4.0"
 resolution-markers = [
 ]
 conflicts = [[
-    { package = "robotframework-jsonvalidator", extra = "rf70" },
-    { package = "robotframework-jsonvalidator", extra = "rf71" },
-    { package = "robotframework-jsonvalidator", extra = "rf72" },
-    { package = "robotframework-jsonvalidator", extra = "rf73" },
-    { package = "robotframework-jsonvalidator", extra = "rf74" },
+    { package = "robotframework-jsonschemavalidator", extra = "rf70" },
+    { package = "robotframework-jsonschemavalidator", extra = "rf71" },
+    { package = "robotframework-jsonschemavalidator", extra = "rf72" },
+    { package = "robotframework-jsonschemavalidator", extra = "rf73" },
+    { package = "robotframework-jsonschemavalidator", extra = "rf74" },
 ]]
 
 [[package]]
@@ -867,8 +867,8 @@ wheels = [
 ]
 
 [[package]]
-name = "robotframework-jsonvalidator"
-version = "0.1.3"
+name = "robotframework-jsonschemavalidator"
+version = "0.2.0"
 source = { editable = "." }
 dependencies = [
     { name = "jsonschema" },

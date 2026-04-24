@@ -7,13 +7,13 @@ from typing import Any, Optional
 import tabulate
 
 @library
-class JsonValidator:
+class JsonSchemaValidator:
     """
-    *JSON Validator*
+    *JSON Schema Validator*
     -----------------
     A lightweight JSON validation helper intended for use in Robot Framework test suites.
 
-    `JsonValidator` can load a JSON Schema from a dict or a path-like string and
+    `JsonSchemaValidator` can load a JSON Schema from a dict or a path-like string and
     validate JSON payloads, collecting errors or raising them immediately based on
     configuration.
     """
@@ -51,7 +51,7 @@ class JsonValidator:
         How To Import
         -------
         | ***** Settings *****
-        | Library     JsonValidator     schema=${CURDIR}/schemas/order_schema.json     fail_on_error=${True}
+        | Library     JsonSchemaValidator     schema=${CURDIR}/schemas/order_schema.json     fail_on_error=${True}
         """
 
         self.error_list = []
