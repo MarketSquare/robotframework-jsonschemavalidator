@@ -1,6 +1,16 @@
 # CHANGELOG
 
 
+## v0.1.7 (2026-04-24)
+
+### Bug Fixes
+
+- Publish testpypi trigger
+  ([`66206b9`](https://github.com/MarketSquare/robotframework-jsonvalidator/commit/66206b91a4587ec511b156364f83a1a4c1625c36))
+
+specified more tag specifics for triggering
+
+
 ## v0.1.6 (2026-04-24)
 
 ### Bug Fixes
