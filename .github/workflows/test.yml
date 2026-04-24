@@ -19,6 +19,9 @@ jobs:
             rf_version:
               - "rf70"
               - "rf71"
+              - "rf72"
+              - "rf73"
+              - "rf74"
          
        steps:
         - uses: actions/checkout@v6
