@@ -2,10 +2,16 @@ name: Publish TestPyPi package
 
 on:
   # Manual Dispatch of release
-  push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
-
+ workflow_dispatch:
+    inputs:
+      target:
+        description: "Publish target"
+        required: true
+        type: choice
+        default: testpypi
+        options:
+          - testpypi
+       
 permissions:
   contents: read
   id-token: write   # nodig voor trusted publishing
