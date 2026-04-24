@@ -51,9 +51,9 @@ jobs:
         python -m pip list | grep -i json || true
         ``
 
-    # - name: Validate Keywords exist
-    #   run: python -m robot.libdoc JsonValidator list
+    - name: Validate Keywords exist
+      run: python -m robot.libdoc JsonValidator list
         
-    # - name: Test with robot
-    #   run: |
-    #     python -m robot test/smoke.robot
+    - name: Test with robot
+      run: |
+        python -m robot test/atest.robot
