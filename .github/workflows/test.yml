@@ -7,6 +7,8 @@ jobs:
        name: Exeute Tests
        runs-on: ubuntu-latest
        strategy:
+        fail-fast: false
+        max-parallel: 3
         matrix:
             python-version:
               - "3.10"
@@ -16,6 +18,9 @@ jobs:
               - "3.14"
             rf_version:
               - "rf70"
+       env:
+         UV_CACHE_DIR: ${{ runner.temp }}/uv-cache
+         
        steps:
         - uses: actions/checkout@v6
           with:
@@ -27,7 +32,7 @@ jobs:
             python-version: ${{ matrix.python-version}}
 
         - name: install project
-          run: uv sync  --extra ${{ matrix.rf_version}}
+          run: uv sync --extra ${{ matrix.rf_version}}
 
         - name: run Test
           run: uv run robot test/atest.robot
