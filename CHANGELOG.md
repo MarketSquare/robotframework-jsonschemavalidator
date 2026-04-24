@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.2.0 (2026-04-24)
+
+### Features
+
+- Updated pyproject classifiers
+  ([`5576baf`](https://github.com/MarketSquare/robotframework-jsonvalidator/commit/5576baf9dd7301d3f30dcba9e7c3e63a3c0ed264))
+
+
 ## v0.1.8 (2026-04-24)
 
 ### Bug Fixes
