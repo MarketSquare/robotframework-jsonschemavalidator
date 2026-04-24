@@ -28,6 +28,14 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.14"
+
+    - name: create venv
+      run: |
+        python -m venv venv
+        venv/Scripts/activate
+
+    - name: list files
+      run: ls -la
         
     - name: Install dependencies
       run: |
@@ -36,8 +44,6 @@ jobs:
         pip install tabulate
         pip install jsonschema
 
-    - name: list files
-      run: ls -la
         
     # - name: Test with robot
     #   run: |
