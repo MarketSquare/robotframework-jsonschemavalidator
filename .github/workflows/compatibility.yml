@@ -39,4 +39,4 @@ jobs:
           run: uv sync --extra ${{ matrix.rf_version}} --no-dev
 
         - name: run Test
-          run: uv run robot test/atest.robot
+          run: uv run robot --no-sync test/atest.robot
