@@ -1,15 +1,18 @@
 name: Build Package
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Compatibility Tests"]
+    branches: [main]
+    types:
+     - completed
 
 permissions:
   contents: write
 
 jobs:
   release:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }} 
     runs-on: ubuntu-latest
 
     steps:
