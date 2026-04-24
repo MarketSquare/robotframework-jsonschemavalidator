@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v0.2.0 (2026-04-24)
+
+### Documentation
+
+- Keyword document added
+  ([`e190912`](https://github.com/MarketSquare/robotframework-jsonschemavalidator/commit/e190912732a71e7693c7675514ff769d643a8014))
+
+### Features
+
+- Minor version upgrade
+  ([`8a93268`](https://github.com/MarketSquare/robotframework-jsonschemavalidator/commit/8a93268304c852fee46b99fb4a6551d8e4f3e2b1))
+
+
 ## v0.1.1 (2026-04-24)
 
 ### Bug Fixes
