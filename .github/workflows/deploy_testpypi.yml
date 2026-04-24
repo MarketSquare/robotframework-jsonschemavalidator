@@ -3,7 +3,7 @@ name: Publish package
 on:
   # Automatisch na GitHub Release
   release:
-    types: [created]
+    types: [published]
 
   # Handmatig starten met keuze
   workflow_dispatch:
