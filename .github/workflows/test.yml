@@ -34,7 +34,7 @@ jobs:
         - name: install project
           env:
             UV_PROJECT_ENVIRONMENT: .venv-${{ matrix.python-version }}-${{ matrix.rf_group }}
-          run: uv sync --only-group dev --only-group ${{ matrix.rf_group}}
+          run: uv sync --no-lock --only-group dev --only-group ${{ matrix.rf_group}}
 
         - name: run Test
           run: uv run robot test/atest.robot
