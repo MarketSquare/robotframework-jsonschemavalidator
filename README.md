@@ -17,6 +17,8 @@ This library focuses on:
 - Easy use within Robot Framework  
 - Flexibility for local development and CI/CD environments  
 
+See [keyword documentation](https://robotframework-jsonschemavalidator.statichost.page/) for more information.
+
 ---
 
 ## ✨ Features
