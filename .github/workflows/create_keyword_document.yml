@@ -1,0 +1,38 @@
+name: Create Keyword Documentation File
+
+on:
+  # Manual Dispatch of release
+ workflow_dispatch
+       
+permissions:
+  contents: read
+  id-token: write   # nodig voor trusted publishing
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout exact release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - uses: astral-sh/setup-uv@v7.6.0
+        with:
+          version: 0.11.2
+          python-version: 3.14
+
+      - name: install project
+        run: uv sync
+
+      - name: Generate Robot Framework Libdoc
+        run: |
+          uv run libdoc src/JsonSchemaValidator docs/index.html
+
+      - name: Commit generated Libdoc
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs(robot): update libdoc"
+          file_pattern: docs/index.html
