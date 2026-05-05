@@ -5,11 +5,10 @@ on:
  workflow_dispatch
        
 permissions:
-  contents: read
-  id-token: write   # nodig voor trusted publishing
+  contents: write
 
 jobs:
-  publish:
+  create_documents:
     runs-on: ubuntu-latest
 
     steps:
