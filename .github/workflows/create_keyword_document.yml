@@ -1,12 +1,6 @@
 name: Create Keyword Documentation File
 
 on:
- workflow_run:
-    workflows: ["Publish to PyPi"]
-    branches: [main]
-    types:
-     - completed
-
  workflow_dispatch:
 
 permissions:
@@ -14,7 +8,6 @@ permissions:
 
 jobs:
   create_documents:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }} 
     runs-on: ubuntu-latest
 
     steps:
