@@ -1,18 +1,22 @@
 name: Create Keyword Documentation File
 
 on:
-  # Manual Dispatch of release
- workflow_dispatch
+ workflow_run:
+    workflows: ["Publish to PyPi"]
+    branches: [main]
+    types:
+     - completed
        
 permissions:
   contents: write
 
 jobs:
   create_documents:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }} 
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout exact release tag
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
@@ -28,7 +32,8 @@ jobs:
 
       - name: Generate Robot Framework Libdoc
         run: |
-          uv run libdoc src/JsonSchemaValidator docs/index.html
+          VERSION=$(uv version --short)
+          uv run libdoc --version "$VERSION" src/JsonSchemaValidator docs/index.html
 
       - name: Commit generated Libdoc
         uses: stefanzweifel/git-auto-commit-action@v5
