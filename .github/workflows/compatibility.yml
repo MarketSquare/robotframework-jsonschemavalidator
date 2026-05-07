@@ -1,15 +1,15 @@
-name: Compatibility Tests
+name: Tests and Build
 
 on: push
 
 jobs:
-    test:
-       name: Exeute Tests
-       runs-on: ubuntu-latest
-       strategy:
-        fail-fast: false
-        max-parallel: 3
-        matrix:
+  comp_test:
+    name: Exeute Tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
             python-version:
               - "3.10"
               - "3.11"
@@ -22,10 +22,10 @@ jobs:
               - "rf72"
               - "rf73"
               - "rf74"
-       env:
+    env:
          UV_PROJECT_ENVIRONMENT: .venv-${{ matrix.python-version }}-${{ matrix.rf_version }}
          
-       steps:
+    steps:
         - uses: actions/checkout@v6
           with:
             persist-credentials: false
@@ -40,3 +40,28 @@ jobs:
 
         - name: run Test
           run: uv run --no-sync robot test/atest.robot
+
+  build:
+    needs: comp_test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up uv and python
+        uses: astral-sh/setup-uv@v6
+        with:
+          python-version: 3.13
+
+      - name: Run semantic-release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: | #shell
+          sr() {
+            uvx --from="python-semantic-release@9.21.1" semantic-release "$@"
+          }
+
+          sr version
+          sr publish
