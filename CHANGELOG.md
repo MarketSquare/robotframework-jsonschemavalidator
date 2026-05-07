@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v0.2.3 (2026-05-07)
+
+### Bug Fixes
+
+- Typo fix documentation import
+  ([`1bf5b3d`](https://github.com/MarketSquare/robotframework-jsonschemavalidator/commit/1bf5b3d41dfd8c4f04fa3055bf9e79699e80b339))
+
+### Documentation
+
+- **robot**: Update libdoc
+  ([`cbcae57`](https://github.com/MarketSquare/robotframework-jsonschemavalidator/commit/cbcae57c1063172be6abf276715172876fc27eef))
+
+
 ## v0.2.2 (2026-05-07)
 
 ### Bug Fixes
