@@ -5,6 +5,7 @@ import robot.api.logger as logger
 from . import validation_errors
 from typing import Any, Optional
 import tabulate
+from pathlib import Path
 
 @library
 class JsonSchemaValidator:
@@ -22,14 +23,14 @@ class JsonSchemaValidator:
 
     @not_keyword
     def __init__(
-        self, schema: Optional[str | dict[str, Any]] = None, fail_on_error: bool = True
+        self, schema: Optional[str | Path | dict[str, Any]] = None, fail_on_error: bool = True
     ) -> None:
         """
         Initialize the JSON validator and optionally load a schema.
 
         Parameters
         ----------
-        | schema : str or dict, optional 
+        | schema : str, Patghh or dict, optional 
         |    Either a path to a JSON Schema file (``.json``) or an in-memory JSON
         |    Schema dictionary. If ``None``, no schema is loaded at construction time
         |    and method `load_new_schema` must be called before validation.
@@ -62,7 +63,7 @@ class JsonSchemaValidator:
             self.load_new_schema(schema=schema)
 
     @keyword(name="Load New Schema")
-    def load_new_schema(self, schema: str | dict[str, Any]) -> None:
+    def load_new_schema(self, schema: str | Path | dict[str, Any]) -> None:
         """
         Load and set a new JSON Schema for validation.
 
@@ -80,8 +81,8 @@ class JsonSchemaValidator:
 
         Parameters
         ----------
-        | schema : str or dict
-        |    A JSON Schema dictionary or a path (string) to a JSON Schema file.
+        | schema : str, Path or dict
+        |    A JSON Schema dictionary or a path (string, Path) to a JSON Schema file.
 
         Raises
         ------
@@ -129,7 +130,7 @@ class JsonSchemaValidator:
     ### Validation Keywords
 
     @keyword(name="Validate Json")
-    def validate_json(self, data: str | dict[str, Any], name=None):
+    def validate_json(self, data: str | Path | dict[str, Any], name=None):
         """
         Validate a single JSON document against the loaded schema.
 
@@ -145,7 +146,7 @@ class JsonSchemaValidator:
 
         Parameters
         ----------
-        | data : dict or str
+        | data : dict, str or Path
         |    A dictionary representing a JSON document, or a string path pointing to a
         |    JSON file on disk.
         |
@@ -199,7 +200,7 @@ class JsonSchemaValidator:
 
     @keyword(name="Validate Multiple Json")
     def validate_multiple_json(
-        self, jsondata: list[str | dict[str, Any]], prefix: str = "item"
+        self, jsondata: list[str | Path | dict[str, Any]], prefix: str = "item"
     ) -> None:
         """
         Validate multiple JSON documents against the loaded schema.
@@ -215,7 +216,7 @@ class JsonSchemaValidator:
 W
         Parameters
         ----------
-        | jsondata : list of dict or str
+        | jsondata : list of dict, str or Path
         |    A list where each element is either a dictionary representing a JSON
         |    document, or a string filepath to a JSON file.
         |
@@ -421,7 +422,7 @@ W
         self.validator = Validator(schema)
 
     @not_keyword
-    def _read_json(self, file: str) -> dict[str, Any]:
+    def _read_json(self, file: str | Path) -> dict[str, Any]:
         """
         Read and parse a JSON file from disk.
 
@@ -431,7 +432,7 @@ W
 
         Parameters
         ----------
-        file : str
+        file : str | Path
             Path to a JSON file on disk.
 
         Returns
@@ -443,6 +444,8 @@ W
         ------
         FileNotFoundError
             If the specified file path does not exist.
+        ValueError
+            if provided file is not a file.
         PermissionError
             If the file cannot be opened due to insufficient permissions.
         json.JSONDecodeError
@@ -458,9 +461,16 @@ W
             Load Schema
                 Load New Schema    ${CURDIR}/schemas/order.schema.json
         """
-        with open(file, "r") as jf:
-            data = json.load(jf)
-            return data
+        pfile = Path(file)
+        if not pfile.exists():
+            raise FileNotFoundError(f"Could not find the provided file in path: {pfile}")
+        
+        if not pfile.is_file():
+            raise ValueError(f"Expected a file but got: {pfile}")
+
+        with pfile.open("r", encoding="utf-8") as jf:
+            return json.load(jf)
+
 
     @not_keyword
     def _set_errors(self, errors: list[any], source: str | None) -> None:
