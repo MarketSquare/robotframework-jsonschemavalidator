@@ -120,9 +120,9 @@ class JsonSchemaValidator:
         |    # Now validate payloads with the loaded schema
 
         """
-        try:
+        if isinstance(schema, dict):
             self._set_schema_validator(schema)
-        except jsonschema.exceptions.SchemaError:
+        else:
             data = self._read_json(schema)
             self._set_schema_validator(data)
         self.schema_loaded = True
@@ -473,7 +473,7 @@ W
 
 
     @not_keyword
-    def _set_errors(self, errors: list[any], source: str | None) -> None:
+    def _set_errors(self, errors: list[Any], source: Optional[str | Path]) -> None:
         """
         Store validation errors in the internal ``error_list`` buffer.
 
