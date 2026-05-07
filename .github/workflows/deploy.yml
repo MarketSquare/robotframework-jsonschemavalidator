@@ -42,6 +42,8 @@ jobs:
   create_documents:
     needs: publish_pypi
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout
