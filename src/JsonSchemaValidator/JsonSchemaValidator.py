@@ -30,7 +30,7 @@ class JsonSchemaValidator:
 
         Parameters
         ----------
-        | schema : str, Patghh or dict, optional 
+        | schema : str, Path or dict, optional 
         |    Either a path to a JSON Schema file (``.json``) or an in-memory JSON
         |    Schema dictionary. If ``None``, no schema is loaded at construction time
         |    and method `load_new_schema` must be called before validation.
