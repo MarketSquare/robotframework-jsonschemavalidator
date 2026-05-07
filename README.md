@@ -1,4 +1,4 @@
-# 📘 robotframework-jsonvalidator
+# 📘 robotframework-jsonschemavalidator
 
 A lightweight and extensible JSON Schema validation library for use in **Robot Framework** test suites.  
 Designed for clarity, reliability, and maintainability, it provides meaningful diagnostics when validating one or multiple JSON documents.
