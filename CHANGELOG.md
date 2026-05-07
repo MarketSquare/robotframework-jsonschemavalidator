@@ -1,6 +1,16 @@
 # CHANGELOG
 
 
+## v0.2.4 (2026-05-07)
+
+### Bug Fixes
+
+- Merge pull request #2 from MarketSquare/dependabot/uv/gitpython-3.1.49
+  ([`db3a2a1`](https://github.com/MarketSquare/robotframework-jsonschemavalidator/commit/db3a2a1be8a4c9016a10fe7a443f5bd08aeef254))
+
+Bump gitpython from 3.1.47 to 3.1.49
+
+
 ## v0.2.3 (2026-05-07)
 
 ### Bug Fixes
