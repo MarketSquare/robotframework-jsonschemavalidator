@@ -40,4 +40,42 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository-url: https://test.pypi.org/legacy/
+  
+  acceptance:
+    needs: publish
+    name: Test Package Release
+    runs-on: ubuntu-latest
 
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.14"
+
+    - name: create and activate venv
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        which python
+
+        
+    - name: Install dependencies
+      run: |
+        pip install robotframework
+        pip install tabulate
+        pip install jsonschema
+        pip install --index-url https://test.pypi.org/simple/ robotframework-jsonschemavalidator
+        python -c "import JsonSchemaValidator, inspect; print('JsonValidator loaded from:', getattr(JsonSchemaValidator, '__file__', '<no __file__>'))"
+        python -m pip show -f robotframework-jsonschemavalidator
+        python -m pip show -f JsonSchemaValidator || true
+        python -m pip list | grep -i json || true
+        ``
+
+    - name: Validate Keywords exist
+      run: python -m robot.libdoc JsonSchemaValidator list
+        
+    - name: Test with robot
+      run: |
+        python -m robot test/atest.robot
