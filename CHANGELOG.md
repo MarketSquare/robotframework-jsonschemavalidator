@@ -1,6 +1,40 @@
 # CHANGELOG
 
 
+## v0.2.2 (2026-05-07)
+
+### Bug Fixes
+
+- - updated path strings with pathlib.Path option.
+  ([`3599c2a`](https://github.com/MarketSquare/robotframework-jsonschemavalidator/commit/3599c2acc95f35a21f3bf8bc951cd45691fee971))
+
+### Chores
+
+- Update acceptance.yml
+  ([`0059a3c`](https://github.com/MarketSquare/robotframework-jsonschemavalidator/commit/0059a3c01c1d554e158ae491c42155b69780d5ff))
+
+enabled automatic run based on test pypi deployment
+
+- Update acceptance.yml
+  ([`f0d1607`](https://github.com/MarketSquare/robotframework-jsonschemavalidator/commit/f0d16079d6fe23ce2681080011be5a6aea49a3e9))
+
+- Update acceptance.yml
+  ([`b161057`](https://github.com/MarketSquare/robotframework-jsonschemavalidator/commit/b16105707dabb46886d5e2f9d624391e62059f09))
+
+updated package naming
+
+### Documentation
+
+- **robot**: Update libdoc
+  ([`b49dd57`](https://github.com/MarketSquare/robotframework-jsonschemavalidator/commit/b49dd57a4c3e17317e5dcee8685990af5a5fe50d))
+
+- **robot**: Update libdoc
+  ([`0aef566`](https://github.com/MarketSquare/robotframework-jsonschemavalidator/commit/0aef566c409e87721f56410d068bb0d7e30e2d85))
+
+- **robot**: Update libdoc
+  ([`5827f7c`](https://github.com/MarketSquare/robotframework-jsonschemavalidator/commit/5827f7cfd18f23217972caf5cbfd907cd9c5a1b3))
+
+
 ## v0.2.1 (2026-04-24)
 
 ### Bug Fixes
