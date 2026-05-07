@@ -60,7 +60,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: | #shell
           sr() {
-            uvx --from="python-semantic-release@9.21.1" semantic-release "$@"
+            uvx --from="python-semantic-release@10.5.3" semantic-release "$@"
           }
 
           sr version
