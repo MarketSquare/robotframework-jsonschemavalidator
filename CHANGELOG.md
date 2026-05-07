@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v0.2.6 (2026-05-07)
+
+### Bug Fixes
+
+- Update deploy workflow by adding document creation
+  ([`602c74a`](https://github.com/MarketSquare/robotframework-jsonschemavalidator/commit/602c74ab02e4d7d00a959f595ed8e9ea737eebda))
+
+### Documentation
+
+- **robot**: Update libdoc
+  ([`1ac8732`](https://github.com/MarketSquare/robotframework-jsonschemavalidator/commit/1ac8732f7a58c39940738acd08e03bab834ab8c3))
+
+
 ## v0.2.5 (2026-05-07)
 
 ### Bug Fixes
