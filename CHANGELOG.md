@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.2.5 (2026-05-07)
+
+### Bug Fixes
+
+- Ty check errors
+  ([`e0e768b`](https://github.com/MarketSquare/robotframework-jsonschemavalidator/commit/e0e768bef7a55811f9b2415e43edcefe63ea3806))
+
+
 ## v0.2.4 (2026-05-07)
 
 ### Bug Fixes
