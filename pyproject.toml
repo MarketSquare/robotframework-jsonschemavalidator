@@ -1,6 +1,6 @@
 [project]
 name = "robotframework-jsonschemavalidator"
-version = "1.0.2"
+version = "1.1.0"
 description = "A lightweight JSON Schema validation library for Robot Framework with clear error reporting and flexible validation modes."
 readme = "README.md"
 license = "Apache-2.0"
