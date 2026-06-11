@@ -23,7 +23,7 @@ class JsonSchemaValidator:
 
     @not_keyword
     def __init__(
-        self, schema: Optional[str | Path | dict[str, Any]] = None, fail_on_error: bool = True
+        self, schema: Optional[str | Path | dict[str, Any]] = None, fail_on_error: bool = True, encoding: str = "utf-8-sig"
     ) -> None:
         """
         Initialize the JSON validator and optionally load a schema.
@@ -39,6 +39,9 @@ class JsonSchemaValidator:
         |    When ``True`` (default), validation errors raise an exception immediately.
         |    When ``False``, validation issues are appended to attribute `error_list` for
         |    later inspection.
+        | 
+        | encoding: str, optional
+        |    When provided, json files will be read with the provided encoding. 
 
         Raises
         ------
@@ -52,12 +55,13 @@ class JsonSchemaValidator:
         How To Import
         -------
         | ***** Settings *****
-        | Library     JsonSchemaValidator     schema=${CURDIR}/schemas/order_schema.json     fail_on_error=${True}
+        | Library     JsonSchemaValidator     schema=${CURDIR}/schemas/order_schema.json     fail_on_error=${True}    encoding=utf-8
         """
 
         self.error_list = []
         self.fail_on_error = fail_on_error
         self.schema_loaded = False
+        self.encoding = encoding
 
         if schema is not None:
             self.load_new_schema(schema=schema)
@@ -468,7 +472,7 @@ W
         if not pfile.is_file():
             raise ValueError(f"Expected a file but got: {pfile}")
 
-        with pfile.open("r", encoding="utf-8") as jf:
+        with pfile.open("r", encoding=self.encoding) as jf:
             return json.load(jf)
 
 
